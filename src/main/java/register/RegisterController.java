@@ -14,36 +14,39 @@ import login.LoginDTO;
 import login.LoginService;
 import login.LoginServiceImpl;
 
+//@WebServlet. 요청값이 .regi 로 끝나는 경우 해당 컨트롤러를 찾아 작동합니다. 
 @WebServlet("*.regi")
 public class RegisterController extends HttpServlet {
 
 	RegisterService service;
 
+	// RegisterController 생성자. 컨트롤러가 생성될 때 RegisterServiceImpl 객체를 생성하여 service 변수에 할당합니다.
 	public RegisterController() {
 		service = new RegisterServiceImpl();
 	}
 
+	// Get 방식으로 데이터를 받은 경우 작동합니다.
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcess(request, response);
 	}
 
+	// Post 방식으로 데이터를 받은 경우 작동합니다.
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcess(request, response);
 	}
 	
 	
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doProcess");
+		// 전달받은 Servlet URI 값 이 어느 위치에 존재하는지 경로를 찾습니다. 
+		// URI :  ( Uniform Resource Identifier ) - 통합 자원 식별자 
 		String uri = request.getRequestURI();
 		int lastSlash = uri.lastIndexOf("/");
 		String action = uri.substring(lastSlash);
-		System.out.println(action);
 		HttpSession session = request.getSession();
-		System.out.println("checkPoint-RegisterController-doProcess-1");
 		
 		if(action.equals("/RegisterProcess.regi")) {
-			System.out.println("checkPoint-RegisterController-doProcess-2");
 			// 1. 받을 값 확인
+			// 전달받은 값들을 dto 객체에 입력합니다.
 			RegisterDTO dto = new RegisterDTO();
 			dto.setId(request.getParameter("id"));
 			dto.setPass(request.getParameter("pass"));
@@ -53,116 +56,29 @@ public class RegisterController extends HttpServlet {
 			dto.setLocation(Integer.parseInt(request.getParameter("location")));
 			dto.setPhone_number(Integer.parseInt(request.getParameter("phone_number")));
 			
-//			String id = request.getParameter("user_id");
-//			String pw = request.getParameter("user_pw");
-			
 			// 2. service 요청
+			// DAO 의 insertMember 를 dto 인자를 사용하여 수행 후 결과값을 rs 에 저장합니다.
 			RegisterDAO dao = new RegisterDAO();
-			
 			int rs = dao.insertMember(dto);
+						
 			
-			System.out.println("checkPoint-RegisterController-doProcess-6");
-			
-			
-			if(dto != null){
-				
-				if(rs == 1){
-					System.out.println("checkPoint-RegisterController-doProcess-3");
-					String ContextPath = request.getContextPath();
-					
-					System.out.println(ContextPath + "/src/main/JSP" );
-					
-					response.sendRedirect(ContextPath + "/JSP/Login/Login.jsp");
-				} else {
-					System.out.println("checkPoint-RegisterController-doProcess-4");
-					request.setAttribute("LoginErrMsg", "로그인 오류");
-					request.getRequestDispatcher("LoginForm.jsp").forward(request, response);
-				}
+			// insertMember 의 리턴값이 있는 경우 수행합니다. 
+			if(rs == 1){
+				// 회원가입에 성공한 경우, 경로를 추출하고 추출한 경로를 통해 로그인 페이지로 이동합니다. 
+				String ContextPath = request.getContextPath();				
+				response.sendRedirect(ContextPath + "/JSP/Login/Login.jsp");
 			} else {
-				System.out.println("checkPoint-RegisterController-doProcess-5");
-				request.setAttribute("LoginErrMsg", "회원가입 오류");
-				request.getRequestDispatcher("LoginForm.jsp").forward(request, response);
-			}
-		} else if(action.equals("/LoginForm.lo")) {
-			response.sendRedirect("LoginForm.jsp");
-		} else if(action.equals("/Logout.lo")) {
-			session.invalidate();			
-			response.sendRedirect("LoginForm.jsp");
-		}
-		
-	}
-}
-
-/*
-
-
-@WebServlet("*.lo")
-public class LoginController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-
-	LoginService service;
-
-	public LoginController() {
-		service = new LoginServiceImpl();
-	}
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doProcess(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doProcess(request, response);
-	}
-
-	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doProcess");
-		String uri = request.getRequestURI();
-		int lastSlash = uri.lastIndexOf("/");
-		String action = uri.substring(lastSlash);
-		System.out.println(action);
-		HttpSession session = request.getSession();
-		System.out.println("checkPoint-LoingController-doProcess-1");
-		
-		if(action.equals("/LoginProcess.lo")) {
-			System.out.println("checkPoint-LoingController-doProcess-2");
-			// 1. 받을 값 확인
-			String id = request.getParameter("user_id");
-			String pw = request.getParameter("user_pw");
-			System.out.println(id);
-			System.out.println(pw);
-			// 2. service 요청
-			LoginDAO dao = new LoginDAO();
-			LoginDTO dto = dao.selectView(id);
-			
-			System.out.println("checkPoint-LoingController-doProcess-6");
-			System.out.println(dto.getPW());
-			
-			if(dto != null){
 				
-				if(pw.equals(dto.getPW())){
-					System.out.println("checkPoint-LoingController-doProcess-3");
-					session.setAttribute("UserId", id);
-					
-					response.sendRedirect("Main/Main.jsp");
-				}else{
-					System.out.println("checkPoint-LoingController-doProcess-4");
-					request.setAttribute("LoginErrMsg", "로그인 오류");
-					request.getRequestDispatcher("LoginForm.jsp").forward(request, response);
-				}
-			}else{
-				System.out.println("checkPoint-LoingController-doProcess-5");
 				request.setAttribute("LoginErrMsg", "로그인 오류");
 				request.getRequestDispatcher("LoginForm.jsp").forward(request, response);
 			}
-			// 3. 어떻게 어디로 이동 할것인?
-			
-		}else if(action.equals("/LoginForm.lo")) {
-			response.sendRedirect("LoginForm.jsp");
-		}else if(action.equals("/Logout.lo")) {
+		
+		}
+		// Servelt 의 경로값이 /Logout.lo 인 경우 작동합니다. 해당 위치는 아직 추가 작업이 필요합니다.
+		else if(action.equals("/Logout.lo")) {
 			session.invalidate();			
 			response.sendRedirect("LoginForm.jsp");
 		}
+		
 	}
-
 }
-*/

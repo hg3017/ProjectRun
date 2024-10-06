@@ -9,6 +9,8 @@
 <body>
 
 <h1>Write</h1>
+
+<!-- 입력한 값을 RegisterProcess.regi 에  , post 방식을 통해 전달합니다.  -->
 <form action="RegisterProcess.regi" method = "post" name = "RegisterFrm" onsubmit="return validateForm(this)">
     <table border="1" width="80%">
         <tr>

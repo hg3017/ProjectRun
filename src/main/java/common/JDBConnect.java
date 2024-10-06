@@ -10,11 +10,19 @@ import javax.servlet.ServletContext;
 
 public class JDBConnect {
 
+	// JDBC API에서 데이터베이스와 연결을 관리하는 인터페이스입니다. 
 	public Connection con;
+	
+	// JDBC를 통해 SQL 쿼리를 실행하는 인터페이스입니다. 
 	public Statement stmt;
+	
+	// JDBC(Java Database Connectivity) API에서 SQL문을 미리 컴파일하여 실행하는 객체 입니다. 
 	public PreparedStatement psmt;
+	
+	// JDBC(Java Database Connectivity) API에서 데이터베이스 쿼리 결과를 표 형태로 반환하는 객체입니다. 
 	public ResultSet rs;
 
+	// 미리 설정한 경로와 JDBC Connection 을 수행하는 메서드입니다. 
 	public JDBConnect() {
 		try{
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -27,35 +35,6 @@ public class JDBConnect {
 			String pass = "project";
 			con = DriverManager.getConnection(url,user,pass);
 			System.out.println("DB 연결 성공(기본 생성자)");
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	
-	public JDBConnect(String driver, String url, String user, String pass) {
-		try{
-			Class.forName(driver);
-			
-			con = DriverManager.getConnection(url,user,pass);
-			System.out.println("DB 연결 성공(인수 생성자 1)");
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	
-	public JDBConnect(ServletContext application) {
-		try{
-			
-			String driver = application.getInitParameter("MysqlDriver");			
-			
-			Class.forName(driver);
-
-			String url = application.getInitParameter("MysqlUrl");
-			String user = application.getInitParameter("MysqlId");
-			String pass = application.getInitParameter("MysqlPwd");
-
-			con = DriverManager.getConnection(url,user,pass);
-			System.out.println("DB 연결 성공(인수 생성자 2)");
 		}catch(Exception e){
 			e.printStackTrace();
 		}

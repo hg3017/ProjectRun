@@ -4,4 +4,4 @@
     
 <%-- <%@ include file = '/Login/Login.jsp' %>     --%>
 
-<jsp:include page= 'Login/Login.jsp' />
+<jsp:include page= 'Main/Main.jsp' />

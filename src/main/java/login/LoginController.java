@@ -15,69 +15,76 @@ import login.LoginDTO;
 
 
 
+// @WebServlet. 요청값이 .lo 로 끝나는 경우 해당 컨트롤러를 찾아 작동합니다. 
 @WebServlet("*.lo")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	LoginService service;
 
+	// LoginController 생성자. 컨트롤러가 생성될 때 LoginServiceImpl 객체를 생성하여 service 변수에 할당합니다.
 	public LoginController() {
 		service = new LoginServiceImpl();
 	}
 
+	// GET 방식으로 데이터를 받은 경우 작동합니다.
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcess(request, response);
 	}
 
+	// Post 방식으로 데이터를 받은 경우 작동합니다.
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doProcess(request, response);
 	}
 
+	
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doProcess");
+		// 전달받은 Servlet URI 값 이 어느 위치에 존재하는지 경로를 찾습니다. 
+		// URI :  ( Uniform Resource Identifier ) - 통합 자원 식별자 
 		String uri = request.getRequestURI();
 		int lastSlash = uri.lastIndexOf("/");
 		String action = uri.substring(lastSlash);
-		System.out.println(action);
 		HttpSession session = request.getSession();
-		System.out.println("checkPoint-LoingController-doProcess-1");
 		
+		// Servelt 의 경로값이 /LoginProcess.lo 인 경우 작동합니다. 
 		if(action.equals("/LoginProcess.lo")) {
-			System.out.println("checkPoint-LoingController-doProcess-2");
 			// 1. 받을 값 확인
 			String id = request.getParameter("user_id");
 			String pw = request.getParameter("user_pw");
 			System.out.println(id);
 			System.out.println(pw);
+			
 			// 2. service 요청
 			LoginDAO dao = new LoginDAO();
+			// LoginDTO 의 형태를 가진 객체를 dto 의 이름으로 생성하고 그 안에 dao.selectView(id) 에서 리턴받은 값을 입력합니다.
 			LoginDTO dto = dao.selectView(id);
-			
-			System.out.println("checkPoint-LoingController-doProcess-6");
-			System.out.println(dto.getPW());
-			
+				
+			// dto 값이 null 이 아닌경우(리턴이 있는 경우) 작동합니다. 
 			if(dto != null){
 				
+				// 전달받은 id, pw 값이 일치하는 경우 작동합니다. 
 				if(pw.equals(dto.getPW())){
-					System.out.println("checkPoint-LoingController-doProcess-3");
-					session.setAttribute("UserId", id);
-					
+					session.setAttribute("UserId", id);	
 					response.sendRedirect("Main/Main.jsp");
 				}else{
-					System.out.println("checkPoint-LoingController-doProcess-4");
 					request.setAttribute("LoginErrMsg", "로그인 오류");
 					request.getRequestDispatcher("LoginForm.jsp").forward(request, response);
 				}
-			}else{
-				System.out.println("checkPoint-LoingController-doProcess-5");
+			} 
+			// dto 값이 null 인 경우 작동합니다. 
+			else{
 				request.setAttribute("LoginErrMsg", "로그인 오류");
 				request.getRequestDispatcher("LoginForm.jsp").forward(request, response);
 			}
-			// 3. 어떻게 어디로 이동 할것인?
 			
-		}else if(action.equals("/LoginForm.lo")) {
+			
+		}
+		// Servelt 의 경로값이 /LoginForm.lo 인 경우 작동합니다. 해당 위치는 아직 추가 작업이 필요합니다.
+		else if(action.equals("/LoginForm.lo")) {
 			response.sendRedirect("LoginForm.jsp");
-		}else if(action.equals("/Logout.lo")) {
+		}
+		// Servelt 의 경로값이 /Logout.lo 인 경우 작동합니다. 해당 위치는 아직 추가 작업이 필요합니다.
+		else if(action.equals("/Logout.lo")) {
 			session.invalidate();			
 			response.sendRedirect("LoginForm.jsp");
 		}
