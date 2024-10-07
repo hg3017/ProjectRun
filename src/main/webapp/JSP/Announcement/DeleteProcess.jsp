@@ -1,8 +1,8 @@
-<%@page import="announcement.AnnouncementDAO"%>
-<%@page import="announcement.AnnouncementDTO"%>
+<%@page import="DAO.AnnouncementDAO"%>
+<%@page import="DTO.AnnouncementDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="IsLoggedIn.jsp"%> 
+<%@ include file="./IsLoggedIn.jsp"%> 
 <%
 String num = request.getParameter("num");  // 일련번호 얻기 
 

@@ -1,9 +1,9 @@
-<%@page import="utils.AnnouncementPage"%>
-<%@page import="announcement.AnnouncementDTO"%>
+<%@page import="Utils.AnnouncementPage"%>
+<%@page import="DTO.AnnouncementDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
-<%@page import="announcement.AnnouncementDAO"%>
+<%@page import="DAO.AnnouncementDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -21,6 +21,8 @@ if (searchWord != null) {
 
 int totalCount = dao.selectCount(ann);  // 게시물 수 확인
 
+
+
 //paging
 int pageSize = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
 int blockPage = Integer.parseInt(application.getInitParameter("PAGES_PER_BLOCK"));
@@ -34,7 +36,8 @@ if(pageTemp != null && !pageTemp.equals(""))
 int limit = pageSize;
 int offset = (pageNum - 1) * pageSize + 1; // 1 ~ 10 , 11 ~ 20
 ann.put("limit", String.valueOf(pageSize));
-ann.put("offset", String.valueOf(offset));
+ann.put("offset", String.valueOf(offset)); 
+
 
 List<AnnouncementDTO> amtLists = dao.selectList(ann);  // 게시물 목록 받기
 dao.close();  // DB 연결 닫기
@@ -44,6 +47,9 @@ dao.close();  // DB 연결 닫기
 <head>
 <meta charset="UTF-8">
 <title>List</title>
+<script>
+alter(${pageContext.request.contextPath});
+</script>
   <script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.min.js"></script>
   <script src="${pageContext.request.contextPath}/resources/js/jquery-ui.min.js"></script>
   <script src="${pageContext.request.contextPath}/resources/js/swiper-bundle.min.js"></script>
@@ -61,116 +67,7 @@ dao.close();  // DB 연결 닫기
 </style>
 </head>
 <body>
-    <header id="header">
-      <div class="inner">
-          <h1 class="logo">
-            <a href="index.html">
-              <img src="../resources/images/free-icon-trail-running-3163782.png" alt="러닝메이트">
-              <span class="blind">러닝메이트</span>
-            </a>
-          </h1>
-          <nav class="gnb_wrap">
-            <ul class="gnb">
-              <li>
-                <a href="#">회사소개</a>
-                <ul class="depth2">
-                  <li><a href="/company/ceo"></a></li>
-                  <li><a href="/company/philosophy"></a></li>
-                  <li><a href="/company/business"></a></li>
-                  <li><a href="/company/history"></a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">지역크루</a>
-                <ul class="depth2">
-                  <li><a href="/company/ceo"></a></li>
-                  <li><a href="/company/philosophy"></a></li>
-                  <li><a href="/company/business"></a></li>
-                  <li><a href="/company/history"></a></li>
-                  <li><a href="/product/list?type=9"></a></li>
-                  <li><a href="/product/list?type=9"></a></li>
-                  <li><a href="/product/list?type=5"></a></li>
-                  <li><a href="/product/list?type=11"></a></li>
-                  <li><a href="/product/list?type=7"></a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">게시판</a>
-                <ul class="depth2">
-                  <li><a href="/esg/esg"></a></li>
-                  <li><a href="/esg/eco"></a></li>
-                  <li><a href="/esg/value"></a></li>
-                  <li><a href="/esg/global"></a></li>
-                  <li><a href="/esg/ethics"></a></li>
-                  <li><a href="/esg/contribution"></a></li>
-                  <li><a href="/esg/reports"></a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="/running/announcement/List.jsp">고객센터</a>
-                <ul class="depth2">
-                  <li><a href="/center/service"></a></li>
-                  <li><a href="/center/supply?prod_cat_idx=1"></a></li>
-                  <li><a href="/center/cyber"></a></li>
-                  <li><a href="/center/safe"></a></li>
-                  <li><a href="/support/privacy"></a></li>
-                </ul>
-              </li>
-            </ul>
-          </nav>
-          <div class="btn_wrap">
-            <a class="login_btn" href="login.html">로그인</a>  
-            <button type="button" class="sitemap_btn">
-              <span class="blind">사이트맵 열기</span>
-              <i></i>
-              <i></i>
-              <i></i>
-            </button>
-          </div>
-      </div>
-      <aside class="menu_wrap">
-        <div class="menu_inner">
-          <h2><span class="blind">러닝크루</span></h2>
-          <ul class="menu">
-            <li>
-              <a href="#">회사소개</a>
-              <ul class="depth2">
-                <li><a href="/about/greeting.do"></a></li>
-                <li><a href="/about/greeting.do"></a></li>
-                <li><a href="/about/greeting.do"></a></li>
-                <li><a href="/about/greeting.do"></a></li>
-                <li><a href="/about/greeting.do"></a></li>
-              </ul>
-            </li>
-            <li>
-              <a href="#">지역크루</a>
-              <ul class="depth2">
-                <li><a href="/products/sampleCheck.do"></a></li>
-                <li><a href="/products/sampleCheck.do"></a></li>
-                <li><a href="/products/sampleCheck.do"></a></li>
-              </ul>
-            </li>
-            <li>
-              <a href="#">게시판</a>
-              <ul class="depth2">
-                <li><a href="investment/inquiry.do"></a></li>
-                <li><a href="investment/inquiry.do"></a></li>
-                <li><a href="investment/inquiry.do"></a></li>
-                <li><a href="investment/inquiry.do"></a></li>
-              </ul>
-            </li>
-            <li>
-              <a href="/running/announcement/List.jsp">고객센터</a>
-              <ul class="depth2">
-                <li><a href="investment/inquiry.do"></a></li>
-                <li><a href="investment/inquiry.do"></a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </aside>
-    </header>
-
+    <jsp:include page= '../Common/Header.jsp' />
 	<!-- 검색 -->
 	<form method="get">
 		<table width="50%" style="border-collapse: collapse">
@@ -235,25 +132,8 @@ else {
 			</td>
 		</tr>
 	</table>
-	    <footer id="footer">
-      <div class="inner">
-        <div class="footer_top">
-          <h2><img src="../resources/images/free-icon-trail-running-3163782.png" alt="러닝크루"></h2>
-          <div class="menu">
-            <p><a href="#">개인정보처리방침</a></p>
-            <p><a href="#">문의하기</a></p>
-          </div>
-        </div>
-        <div class="footer_bottom">
-          <h2>
-            <span class="blind">러닝크루</span>
-          </h2>
-          <div class="txt_wrap">
-            <p class="address">서울특별시 종로구 삼일대로17길 51<span></span>사업자번호 : 123-45-67890<span></span>대표자 : 김경문</p>
-            <p class="copyright">COPYRIGHT © <strong>2024 LX Glas Corp.</strong> All rights reserved.</p>
-          </div>
-        </div>
-      </div>
-    </footer>
+	   
+	<jsp:include page= '../Common/Footer.jsp' />   
+	   
 </body>
 </html>
