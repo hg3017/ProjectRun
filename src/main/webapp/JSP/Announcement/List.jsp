@@ -1,23 +1,49 @@
+<%@page import="utils.AnnouncementPage"%>
+<%@page import="announcement.AnnouncementDTO"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
+<%@page import="announcement.AnnouncementDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <!-- <meta name="viewport" content="width=1004"> -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="러닝크루">
-  <meta property="og:type" content="website">
-  <meta  property="og:title" content="러닝">
-  <meta property="og:url" content="https://dot386@dot386.dothome.co.kr/html/test/index.html">
-  <meta property="og:image" content="/pub/images/og_image.jpg">
-  <meta property="og:description" content="러닝크루">
-  <title>러닝메이트</title>
-  <link rel="icon" href="${pageContext.request.contextPath}/resources/images/common/favicon.png">
-  <link rel="apple-touch-icon-precomposed" href="images/common/free-icon-running-7126743.png">
+	pageEncoding="UTF-8"%>
 
-	<!-- js 파일 연결 -->
-  <!-- jquery 개발방식에선 js파일을 상단에 연결하여 빠르게 확인되게함 -->
+<%
+AnnouncementDAO dao = new AnnouncementDAO();
+
+//사용자가 입력한 검색 조건을 Map에 저장
+Map<String, String> ann = new HashMap<String, String>(); 
+String searchField = request.getParameter("searchField");
+String searchWord = request.getParameter("searchWord");
+if (searchWord != null) {
+ ann.put("searchField", searchField);
+ ann.put("searchWord", searchWord);
+}
+
+int totalCount = dao.selectCount(ann);  // 게시물 수 확인
+
+//paging
+int pageSize = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
+int blockPage = Integer.parseInt(application.getInitParameter("PAGES_PER_BLOCK"));
+int totalPage = (int)Math.ceil((double)totalCount/pageSize);
+
+int pageNum = 1;
+String pageTemp = request.getParameter("pageNum");
+if(pageTemp != null && !pageTemp.equals(""))
+	pageNum =Integer.parseInt(pageTemp);
+
+int limit = pageSize;
+int offset = (pageNum - 1) * pageSize + 1; // 1 ~ 10 , 11 ~ 20
+ann.put("limit", String.valueOf(pageSize));
+ann.put("offset", String.valueOf(offset));
+
+List<AnnouncementDTO> amtLists = dao.selectList(ann);  // 게시물 목록 받기
+dao.close();  // DB 연결 닫기
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>List</title>
   <script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.min.js"></script>
   <script src="${pageContext.request.contextPath}/resources/js/jquery-ui.min.js"></script>
   <script src="${pageContext.request.contextPath}/resources/js/swiper-bundle.min.js"></script>
@@ -31,13 +57,10 @@
   <link href="${pageContext.request.contextPath}/resources/css/main.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css">
 	<link href="${pageContext.request.contextPath}/resources/css/common.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css">
   <!-- php타임스탬프 이용하여 css캐싱방지 -->
-  
+<style>
+</style>
 </head>
 <body>
-  <div id="skip_navi">
-    <a href="#container">본문바로가기</a>
-  </div>
-  <div id="wrap">
     <header id="header">
       <div class="inner">
           <h1 class="logo">
@@ -84,7 +107,7 @@
                 </ul>
               </li>
               <li>
-                <a href="Announcement/List.jsp">고객센터</a>
+                <a href="/running/announcement/List.jsp">고객센터</a>
                 <ul class="depth2">
                   <li><a href="/center/service"></a></li>
                   <li><a href="/center/supply?prod_cat_idx=1"></a></li>
@@ -96,7 +119,7 @@
             </ul>
           </nav>
           <div class="btn_wrap">
-            <a class="login_btn" href="Login/Login.jsp">로그인</a>  
+            <a class="login_btn" href="login.html">로그인</a>  
             <button type="button" class="sitemap_btn">
               <span class="blind">사이트맵 열기</span>
               <i></i>
@@ -137,7 +160,7 @@
               </ul>
             </li>
             <li>
-              <a href="#">고객센터</a>
+              <a href="/running/announcement/List.jsp">고객센터</a>
               <ul class="depth2">
                 <li><a href="investment/inquiry.do"></a></li>
                 <li><a href="investment/inquiry.do"></a></li>
@@ -147,130 +170,72 @@
         </div>
       </aside>
     </header>
-    <main id="container">
-      <section class="main_visual">
-      <h2 class="blind">메인슬라이더</h2>
-      </section>
-      <section class="main_crew">
-        <div class="inner">
-          <div class="head_wrap">
-            <h2 class="main_tit">러닝크루</h2>
-            <a class="crew_btn" href="#">크루등록하기</a>
-          </div>
-          <p class="tit">전국 각지에 흩어진 러닝크루들을 소개합니다.</p>
-          <div class="swiper_wrap">
-            <div class="swiper">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <a href="#">
-                    <div class="img_wrap">
-                      <img src="${pageContext.request.contextPath}/resources/images/running-1944798_1280.jpg" alt="">
-                    </div>
-                    <div class="txt_wrap">
-                      <h3>서울/경기</h3>
-                      <p>Sub3</p>
-                      <span>목요일<br>PM 7:30</span>
-                    </div>
-                  </a>
-                </div>
-                <div class="swiper-slide">
-                  <a href="#">
-                    <div class="img_wrap">
-                      <img src="${pageContext.request.contextPath}/resources/images/KakaoTalk_20240930_175125737.jpg" alt="">
-                    </div>
-                    <div class="txt_wrap">
-                      <h3>서울/경기</h3>
-                      <p>Sub3</p>
-                      <span>목요일<br>PM 7:30</span>
-                    </div>
-                  </a>
-                </div>
-                <div class="swiper-slide">
-                  <a href="#">
-                    <div class="img_wrap">
-                      <img src="${pageContext.request.contextPath}/resources/images/KakaoTalk_20240930_175125737.jpg" alt="">
-                    </div>
-                    <div class="txt_wrap">
-                      <h3>서울/경기</h3>
-                      <p>Sub3</p>
-                      <span>목요일<br>PM 7:30</span>
-                    </div>
-                  </a>
-                </div>
-                <div class="swiper-slide">
-                  <a href="#">
-                    <div class="img_wrap">
-                      <img src="${pageContext.request.contextPath}/resources/images/KakaoTalk_20240930_175125737.jpg" alt="">
-                    </div>
-                    <div class="txt_wrap">
-                      <h3>서울/경기</h3>
-                      <p>Sub3</p>
-                      <span>목요일<br>PM 7:30</span>
-                    </div>
-                  </a>
-                </div>
-                <div class="swiper-slide">
-                  <a href="#">
-                    <div class="all_wrap">
-                      <img src="${pageContext.request.contextPath}/resources/images/running-1944798_1280.jpg" alt="">
-                      <h3>서울/경기</h3>
-                      <p>Sub3</p>
-                      <span>목요일<br>PM 7:30</span>
-                    </div>
-                  </a>
-                </div>
-                <div class="swiper-slide">
-                  <a href="#">
-                    <div class="img_wrap">
-                      <img src="${pageContext.request.contextPath}/resources/images/KakaoTalk_20240930_175125737.jpg" alt="">
-                    </div>
-                    <div class="txt_wrap">
-                      <h3>서울/경기</h3>
-                      <p>Sub3</p>
-                      <span>목요일<br>PM 7:30</span>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <div class="swiper-pagination"></div>
-              <div class="swiper-button-prev arrow_btn"></div>
-              <div class="swiper-button-next arrow_btn"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="main_info">
-        <div class="inner">
-          <div class="board">
-            <div class="board_list">
-              <h2>Q&A</h2>
-            </div>
-            <ul class="list">
-              <li>
-                <a href="board_list.html">
-                  <p>모임 시간 외에 뒤풀이나 번개가 있나요?</p>
-                  <span class="date">2024.09.30</span>
-                </a>
-              </li>
-              <li>
-                <a href="board_list.html">
-                  <p>러닝은 처음인데 참여해도 괜찮나요?</p>
-                  <span class="date">2024.09.30</span>
-                </a>
-              </li>
-              <li>
-                <a href="board_list.html">
-                  <p>모집기간은 언제인가요? 마감된 모임은 신청할 수 없나요?</p>
-                  <span class="date">2024.09.30</span>
-                </a>
-              </li>
-            </ul>
-            <a href="#" class="more_btn">더보기</a>
-          </div>
-        </div>
-      </section>
-    </main>
-    <footer id="footer">
+
+	<!-- 검색 -->
+	<form method="get">
+		<table width="50%" style="border-collapse: collapse">
+			<tr>
+				<td align="right"><select name="searchField">
+						<option value="title">제목</option>
+						<option value="content">내용</option>
+				</select> <input type="text" name="searchWord" /> <input type="submit"
+					value="검색" /></td>
+			</tr>
+		</table>
+	</form>
+	<!-- 공지사항 목록 -->
+	<table border="1" width="50%" style="border-collapse: collapse">
+		<!-- 각각의 이름 -->
+		<tr>
+			<th width="10%">번호</th>
+			<th width="50%">제목</th>
+			<th width="15%">작성자</th>
+			<th width="10%">조회수</th>
+			<th width="15%">작성일</th>
+		</tr>
+		<%
+if (amtLists.isEmpty()) {
+    // 게시물이 하나도 없을 때 
+%>
+		<tr>
+			<td colspan="5" align="center">등록된 게시물이 없습니다.</td>
+		</tr>
+<%
+}
+else {
+    // 게시물이 있을 때 
+/*     int virtualNum = 0; // 화면상에서의 게시물 번호
+    for (AnnouncementDTO dto : amtLists) {
+    	virtualNum = totalCount--;   // 전체 게시물 수에서 시작해 1씩 감소 */
+    	int virtualNum = totalCount - (pageNum - 1) * pageSize; // 페이지에 맞춰 가상번호 계산
+    	for (AnnouncementDTO dto : amtLists) {
+    	    virtualNum--;   // 가상번호는 1씩 감소
+%>
+		<tr align="center">
+			<td><%= virtualNum %></td>
+			<!--게시물 번호-->
+			<td align="left">
+				<!--제목(+ 하이퍼링크)--> <a href="View.jsp?num=<%= dto.getNum() %>"><%= dto.getTitle() %></a>
+			</td>
+			<td align="center"><%= dto.getId() %></td>
+			<!--작성자 아이디-->
+			<td align="center"><%= dto.getVisitcount() %></td>
+			<!--조회수-->
+			<td align="center"><%= dto.getPostdate() %></td>
+			<!--작성일-->
+		</tr>
+		<%}
+    }%>
+	</table>
+	<table width="50%" style="border-collapse: collapse">
+		<tr align="right">
+			<td align="center"><%=AnnouncementPage.pagingStr(totalCount, pageSize, blockPage, pageNum, request.getRequestURI()) %></td>
+			<td>
+				<button type="button" onclick="location.href='Write.jsp';">글쓰기</button>
+			</td>
+		</tr>
+	</table>
+	    <footer id="footer">
       <div class="inner">
         <div class="footer_top">
           <h2><img src="../resources/images/free-icon-trail-running-3163782.png" alt="러닝크루"></h2>
@@ -290,6 +255,5 @@
         </div>
       </div>
     </footer>
-  </div>
 </body>
 </html>
