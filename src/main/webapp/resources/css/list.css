@@ -1,0 +1,86 @@
+.list_page {
+  padding: 100px 0;
+}
+
+.contets .inner {
+  max-width: 1450px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.contets .m_wrap {
+  top: 0;
+  right: 0;
+  text-align: right;
+  align-items: end;
+  padding: 15px 0;
+  margin: 0 45px 0;
+}
+.contets .m_wrap p {
+  font-size: 13px;
+}
+.contets .m_wrap span {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  background: url(../images/icon_loc.png) no-repeat 50% 30%;
+  vertical-align: middle;
+}
+
+.contets .board_list {
+  margin: 0 45px 0;
+}
+
+.ban_box {
+  padding-top: 80px;
+}
+
+.ban_box .inner {
+  max-width: 1450px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.ban_box .etc {
+  margin: 0 45px 0;
+  display: flex;
+  justify-content: space-around;
+  background: cadetblue;
+}
+
+.ban_box .etc li {
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+  background: #fff;
+}
+
+.ban_box .etc a {
+  border-radius: 5px;
+  display: block;
+  height: 100px;
+  background: #fff url(../images/icon-consult.png) no-repeat left bottom;
+  padding: 30px 30px 30px 100px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 모바일 */
+@media (max-width: 1200px) {
+
+}
+
+/* 모바일 */
+@media (max-width: 767px) {
+  .list_page {
+    padding: 100px 0;
+  }
+}

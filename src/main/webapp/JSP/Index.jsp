@@ -2,5 +2,3 @@
     pageEncoding="UTF-8"%>
 
 <jsp:include page= 'Main/Main.jsp' />
-
-<!-- 각주입니다. -->

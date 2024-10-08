@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
+<head>
 <head>
   <meta charset="UTF-8">
   <!-- <meta name="viewport" content="width=1004"> -->
@@ -12,7 +13,7 @@
   <meta property="og:url" content="https://dot386@dot386.dothome.co.kr/html/test/index.html">
   <meta property="og:image" content="/pub/images/og_image.jpg">
   <meta property="og:description" content="러닝크루">
-  <title>러닝메이트</title>
+  <title>러닝메이트/게시판</title>
   <link rel="icon" href="${pageContext.request.contextPath}/resources/images/common/favicon.png">
   <link rel="apple-touch-icon-precomposed" href="images/common/free-icon-running-7126743.png">
 
@@ -34,16 +35,14 @@
   <!-- php타임스탬프 이용하여 css캐싱방지 -->
   
 </head>
+</head>
 <body>
-  <div id="skip_navi">
-    <a href="#container">본문바로가기</a>
-  </div>
   <div id="wrap">
     <header id="header">
       <div class="inner">
           <h1 class="logo">
-            <a href="Index.jsp">
-              <img src="../resources/images/logo.png" alt="러닝메이트">
+            <a href="../Index.jsp">
+              <img src="../../resources/images/logo.png" alt="러닝메이트">
               <span class="blind">러닝메이트</span>
             </a>
           </h1>
@@ -59,7 +58,7 @@
                 </ul>
               </li>
               <li>
-                <a href="Main/view.jsp">지역크루</a>
+                <a href="view.jsp">지역크루</a>
                 <ul class="depth2">
                   <li><a href="/company/ceo"></a></li>
                   <li><a href="/company/philosophy"></a></li>
@@ -73,7 +72,7 @@
                 </ul>
               </li>
               <li>
-                <a href="Main/list-board.jsp">크루게시판</a>
+                <a href="list-board.jsp">크루게시판</a>
                 <ul class="depth2">
                   <li><a href="/esg/esg"></a></li>
                   <li><a href="/esg/eco"></a></li>
@@ -85,7 +84,7 @@
                 </ul>
               </li>
               <li>
-                <a href="Main/list-board.jsp">자유게시판</a>
+                <a href="list-board.jsp">자유게시판</a>
                 <ul class="depth2">
                   <li><a href="/esg/esg"></a></li>
                   <li><a href="/esg/eco"></a></li>
@@ -97,7 +96,7 @@
                 </ul>
               </li>
               <li>
-                <a href="Main/list-cs.jsp">고객센터</a>
+                <a href="list-cs.jsp">고객센터</a>
                 <ul class="depth2">
                   <li><a href="/center/service"></a></li>
                   <li><a href="/center/supply?prod_cat_idx=1"></a></li>
@@ -141,7 +140,7 @@
               </ul>
             </li>
             <li>
-              <a href="list-board.jsp">게시판</a>
+              <a href="Main/list-board.jsp">크루게시판</a>
               <ul class="depth2">
                 <li><a href="investment/inquiry.do"></a></li>
                 <li><a href="investment/inquiry.do"></a></li>
@@ -150,7 +149,16 @@
               </ul>
             </li>
             <li>
-              <a href="list-cs.jsp">고객센터</a>
+              <a href="Main/list-board.jsp">자유게시판</a>
+              <ul class="depth2">
+                <li><a href="investment/inquiry.do"></a></li>
+                <li><a href="investment/inquiry.do"></a></li>
+                <li><a href="investment/inquiry.do"></a></li>
+                <li><a href="investment/inquiry.do"></a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="Main/list-cs.html">고객센터</a>
               <ul class="depth2">
                 <li><a href="investment/inquiry.do"></a></li>
                 <li><a href="investment/inquiry.do"></a></li>
@@ -160,125 +168,78 @@
         </div>
       </aside>
     </header>
-    <main id="container">
-      <section class="main_visual">
-      <h2 class="blind">메인슬라이더</h2>
-      </section>
-      <section class="main_crew">
+    <main id="container" class="sub_container list_page">
+      <section class="contets">
         <div class="inner">
-          <div class="head_wrap">
-            <h2 class="main_tit">러닝크루</h2>
-            <a class="crew_btn" href="#">크루등록하기</a>
+          <div class="m_wrap">
+            <p><a href="index.jsp">HOME</a><span></span>게시판</p>
           </div>
-          <p class="tit">전국 각지에 흩어진 러닝크루들을 소개합니다.</p>
-          <div class="swiper_wrap">
-            <div class="swiper">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <a href="#">
-                    <div class="img_wrap">
-                      <img src="${pageContext.request.contextPath}/resources/images/running-1944798_1280.jpg" alt="">
+          <div class="board_list">
+            <div class="list_wrap">
+              <div class="board_search_wrap">
+                <form>
+                  <fieldset>
+                    <legend>게시물 검색</legend>
+                    <div class="board_search">
+                      <div class="select_wrap">
+                        <select>
+                          <option>제목</option>
+                          <option>내용</option>
+                        </select>
+                      </div>
+                      <div class="input_wrap">
+                        <input type="search" title="검색어를 입력해주세요">
+                        <button type="submit" class="search_btn">
+                          <span class="blind">게시물 검색</span>
+                        </button>
+                      </div>
                     </div>
-                    <div class="txt_wrap">
-                      <h3>서울/경기</h3>
-                      <p>Sub3</p>
-                      <span>목요일<br>PM 7:30</span>
-                    </div>
-                  </a>
-                </div>
-                <div class="swiper-slide">
-                  <a href="#">
-                    <div class="img_wrap">
-                      <img src="${pageContext.request.contextPath}/resources/images/KakaoTalk_20240930_175125737.jpg" alt="">
-                    </div>
-                    <div class="txt_wrap">
-                      <h3>서울/경기</h3>
-                      <p>Sub3</p>
-                      <span>목요일<br>PM 7:30</span>
-                    </div>
-                  </a>
-                </div>
-                <div class="swiper-slide">
-                  <a href="#">
-                    <div class="img_wrap">
-                      <img src="${pageContext.request.contextPath}/resources/images/KakaoTalk_20240930_175125737.jpg" alt="">
-                    </div>
-                    <div class="txt_wrap">
-                      <h3>서울/경기</h3>
-                      <p>Sub3</p>
-                      <span>목요일<br>PM 7:30</span>
-                    </div>
-                  </a>
-                </div>
-                <div class="swiper-slide">
-                  <a href="#">
-                    <div class="img_wrap">
-                      <img src="${pageContext.request.contextPath}/resources/images/KakaoTalk_20240930_175125737.jpg" alt="">
-                    </div>
-                    <div class="txt_wrap">
-                      <h3>서울/경기</h3>
-                      <p>Sub3</p>
-                      <span>목요일<br>PM 7:30</span>
-                    </div>
-                  </a>
-                </div>
-                <div class="swiper-slide">
-                  <a href="#">
-                    <div class="all_wrap">
-                      <img src="${pageContext.request.contextPath}/resources/images/running-1944798_1280.jpg" alt="">
-                      <h3>서울/경기</h3>
-                      <p>Sub3</p>
-                      <span>목요일<br>PM 7:30</span>
-                    </div>
-                  </a>
-                </div>
-                <div class="swiper-slide">
-                  <a href="#">
-                    <div class="img_wrap">
-                      <img src="${pageContext.request.contextPath}/resources/images/running-1944798_1280.jpg" alt="">
-                    </div>
-                    <div class="txt_wrap">
-                      <h3>서울/경기</h3>
-                      <p>Sub3</p>
-                      <span>목요일<br>PM 7:30</span>
-                    </div>
-                  </a>
-                </div>
+                  </fieldset>
+                </form>
               </div>
-              <div class="swiper-pagination"></div>
-              <div class="swiper-button-prev arrow_btn"></div>
-              <div class="swiper-button-next arrow_btn"></div>
+              <div class="btn_wrap">
+                <a class="write_btn" href="release-write.html">글쓰기</a>
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
-      <section class="main_info">
-        <div class="inner">
-          <div class="board">
-            <div class="board_list">
-              <h2>Q&A</h2>
+            <table>
+              <caption class="nohead">공지사항 테이블</caption>
+                <tr>
+                  <td class="col1">1</td>
+                  <td class="td_left">
+                    <a href="release-view.html">
+                      <p>러닝 시 필요물품</p>
+                    </a>
+                  </td>
+                  <td class="col3">2024.09.30</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td class="td_left">
+                    <a href="#">
+                      <p>?</p>
+                    </a>
+                  </td>
+                  <td>2024.09.30</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td class="td_left">
+                    <a href="#">
+                      <p>!</p>
+                    </a>
+                  </td>
+                  <td>2024.09.30</td>
+                </tr>
+            </table>
+            <div class="board_pagination">
+              <a href="#" class="prev_paging">
+                <span class="blind">첫페이지</span>
+              </a>
+              <span class="num active">1</span>
+              <a href="#" class="next_paging">
+                <span class="blind">마지막페이지</span>
+              </a>
             </div>
-            <ul class="list">
-              <li>
-                <a href="release-list.html">
-                  <p>모임 시간 외에 뒤풀이나 번개가 있나요?</p>
-                  <span class="date">2024.09.30</span>
-                </a>
-              </li>
-              <li>
-                <a href="release-list.html">
-                  <p>러닝은 처음인데 참여해도 괜찮나요?</p>
-                  <span class="date">2024.09.30</span>
-                </a>
-              </li>
-              <li>
-                <a href="release-list.html">
-                  <p>모집기간은 언제인가요? 마감된 모임은 신청할 수 없나요?</p>
-                  <span class="date">2024.09.30</span>
-                </a>
-              </li>
-            </ul>
-            <a href="#" class="more_btn">더보기</a>
           </div>
         </div>
       </section>
@@ -286,7 +247,7 @@
     <footer id="footer">
       <div class="inner">
         <div class="footer_top">
-          <h2><img src="../resources/images/logo.png" alt="러닝크루"></h2>
+          <h2><img src="../../resources/images/logo.png" alt="러닝크루"></h2>
           <div class="menu">
             <p><a href="#">개인정보처리방침</a></p>
             <p><a href="#">문의하기</a></p>
