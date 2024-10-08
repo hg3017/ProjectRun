@@ -54,7 +54,7 @@
                 </ul>
               </li>
               <li>
-                <a href="Announcement/List.jsp">고객센터</a>
+                <a href="../Announcement/List.jsp">고객센터</a>
                 <ul class="depth2">
                   <li><a href="/center/service"></a></li>
                   <li><a href="/center/supply?prod_cat_idx=1"></a></li>

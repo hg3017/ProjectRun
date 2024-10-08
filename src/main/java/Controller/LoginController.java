@@ -67,7 +67,7 @@ public class LoginController extends HttpServlet {
 				// 전달받은 id, pw 값이 일치하는 경우 작동합니다. 
 				if(pw.equals(dto.getPW())){
 					session.setAttribute("UserId", id);	
-					response.sendRedirect("Main/Main.jsp");
+					response.sendRedirect("../Main/Main.jsp");
 				}else{
 					request.setAttribute("LoginErrMsg", "로그인 오류");
 					request.getRequestDispatcher("LoginForm.jsp").forward(request, response);
