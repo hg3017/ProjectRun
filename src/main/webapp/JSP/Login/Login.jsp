@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglibprefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-    
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +10,7 @@
     
 </head>
 <body>
-	<h1> 로그인 페이지 </h1>
+	<h1> 로그인 페이지 zzzzzzz</h1>
 	
 	<!-- 로그인 오류 메시지를 출력합니다. 오류가 없는 경우 빈 문자열을 출력합니다. -->
 	<span style="color:red; font-size: 1.2em;">
