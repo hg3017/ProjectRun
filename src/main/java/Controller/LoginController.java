@@ -57,15 +57,14 @@ public class LoginController extends HttpServlet {
 			System.out.println(pw);
 			
 			// 2. service 요청
-			LoginDAO dao = new LoginDAO();
 			// LoginDTO 의 형태를 가진 객체를 dto 의 이름으로 생성하고 그 안에 dao.selectView(id) 에서 리턴받은 값을 입력합니다.
-			LoginDTO dto = dao.selectView(id);
+			LoginDTO dto = service.selectView(id);
 				
 			// dto 값이 null 이 아닌경우(리턴이 있는 경우) 작동합니다. 
 			if(dto != null){
 				
 				// 전달받은 id, pw 값이 일치하는 경우 작동합니다. 
-				if(pw.equals(dto.getPW())){
+				if(pw.equals(dto.getPass())){
 					session.setAttribute("UserId", id);	
 					response.sendRedirect("/JSP/Main/Main.jsp");
 				}else{
@@ -78,12 +77,6 @@ public class LoginController extends HttpServlet {
 				request.setAttribute("LoginErrMsg", "로그인 오류");
 				request.getRequestDispatcher("/JSP/Login/Login.jsp").forward(request, response);
 			}
-			
-			
-		}
-		// Servelt 의 경로값이 /LoginForm.lo 인 경우 작동합니다. 해당 위치는 아직 추가 작업이 필요합니다.
-		else if(action.equals("/LoginForm.lo")) {
-			response.sendRedirect("/JSP/Login/Login.jsp");
 		}
 		// Servelt 의 경로값이 /Logout.lo 인 경우 작동합니다. 해당 위치는 아직 추가 작업이 필요합니다.
 		else if(action.equals("/Logout.lo")) {

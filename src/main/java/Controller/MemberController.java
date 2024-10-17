@@ -57,7 +57,7 @@ public class MemberController extends HttpServlet {
 
 			// 3. 어떻게 어디로 이동할 것인가?
 			// 어느 파일로 send redirect, forward 두가지 방식 중에 어떤걸로 이동할 것인가?
-			String path = "/JSP/Admim/Member/Member_list.jsp";
+			String path = "/JSP/Admim_sample/List.jsp";
 			request.getRequestDispatcher(path).forward(request, response);
 			// List.jsp 파일로 forward 방식으로 이동
 			

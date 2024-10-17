@@ -38,7 +38,8 @@
 </head>
 <body>
    <div id="wrap">
-    <jsp:include page="/JSP/Common/Header.jsp" />
+    <jsp:include page='/JSP/Common/Header.jsp' />
+    <main id="container" class="crew_page">
     <section class="main_report">
       <div class="inner">
         <div class="head_wrap">
@@ -69,7 +70,7 @@
           </ul>
           <div class="report_wrap">
             <ul class="all_view">
-              <li class="featured_card">
+              <li class="active">
                 <a href=/JSP/Main/Release-detail.jsp">
                   <div class="img_wrap">
                     <img src="/resources/images/main_crew1.jpg" alt="">
@@ -82,7 +83,7 @@
                   </div>
                 </a>
               </li>
-              <li class="featured_card">
+              <li>
                 <a href="/JSP/Main/Release-detail.jsp">
                   <div class="img_wrap">  
                      <img src="/resources/images/main_crew1.jpg" alt="">
@@ -95,7 +96,7 @@
                   </div>
                 </a>
               </li>
-              <li class="featured_card">
+              <li>
                 <a href="/JSP/Main/Release-detail.jsp">
                   <div class="img_wrap">
                     <img src="/resources/images/main_crew1.jpg" alt="">
@@ -108,7 +109,7 @@
                   </div>
                 </a>
               </li>
-              <li class="featured_card">
+              <li>
                 <a href="/JSP/Main/Release-detail.jsp">
                   <div class="img_wrap">
                     <img src="/resources/images/main_crew1.jpg" alt="">
@@ -121,7 +122,7 @@
                   </div>
                 </a>
               </li>
-              <li class="featured_card">
+              <li>
                 <a href="/JSP/Main/Release-detail.jsp">
                   <div class="img_wrap">
                     <img src="/resources/images/main_crew1.jpg" alt="">
@@ -134,7 +135,7 @@
                   </div>
                 </a>
               </li>
-              <li class="featured_card">
+              <li>
                 <a href="/JSP/Main/Release-detail.jsp">
                   <div class="img_wrap">
                     <img src="/resources/images/main_crew1.jpg" alt="">
@@ -147,7 +148,7 @@
                   </div>
                 </a>
               </li>
-              <li class="featured_card">
+              <li>
                 <a href="/JSP/Main/Release-detail.jsp">
                   <div class="img_wrap">
                     <img src="/resources/images/main_crew1.jpg" alt="">
@@ -230,6 +231,7 @@
         </div>
       </div>
     </section>
+    </main>
     <jsp:include page= '/JSP/Common/Footer.jsp' />
   </div>
 </body>

@@ -31,7 +31,7 @@ public class LoginDAO extends JDBConnect {
 			e.printStackTrace();
 		} finally {
 			// 작업이 종료된 후 dbconn 을 종료합니다.
-			close();
+//			close();
 		}
 		
 		return member;			
